@@ -1,0 +1,66 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        - id: hub-service
+          uri: lb://hub-service
+          predicates:
+            - Path=/v1/hubs/**, /v1/hub-routes/**
+          filters:
+            - 'RewritePath=/v1/hubs/(?<path>.*), /\${path}'
+            - 'RewritePath=/v1/hub-routes/(?<path>.*), /\${path}'
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/v1/products/**
+          filters:
+            - 'RewritePath=/v1/products/(?<path>.*), /\${path}'
+
+        - id: company-service
+          uri: lb://company-service
+          predicates:
+            - Path=/v1/companies/**
+          filters:
+            - 'RewritePath=/v1/companies/(?<path>.*), /\${path}'
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/v1/orders/**
+          filters:
+            - 'RewritePath=/v1/orders/(?<path>.*), /\${path}'
+
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/v1/deliveries/**, /v1/deliveries-histories/**
+          filters:
+            - 'RewritePath=/v1/deliveries/(?<path>.*), /\${path}'
+            - 'RewritePath=/v1/deliveries-histories/(?<path>.*), /\${path}'
+
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/v1/notification/**
+          filters:
+            - 'RewritePath=/v1/notification/(?<path>.*), /\${path}'
+
+        - id: ai-service
+          uri: lb://ai-service
+          predicates:
+            - Path=/v1/ai/logs/**
+          filters:
+            - 'RewritePath=/v1/ai/logs/(?<path>.*), /\${path}'
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/v1/users/**
+          filters:
+            - 'RewritePath=/v1/users/(?<path>.*), /\${path}'
