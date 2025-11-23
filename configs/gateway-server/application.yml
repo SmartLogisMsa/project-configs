@@ -6,6 +6,21 @@ spring:
           enabled: true
           lower-case-service-id: true
 
+      globalcors:
+        cors-configurations:
+          '[/**]': # 모든 경로에 적용
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+
       routes:
         - id: hub-service
           uri: lb://hub-service
@@ -64,3 +79,28 @@ spring:
             - Path=/v1/users/**
           filters:
             - 'RewritePath=/v1/users/(?<path>.*), /\${path}'
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /api-docs.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    doc-expansion: full
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /user-service/v3/api-docs
+        name: USER API
+      - url: /hub-service/v3/api-docs
+        name: HUB API
+      - url: /order-service/v3/api-docs
+        name: ORDER API
+      - url: /company-service/v3/api-docs
+        name: COMPANY API
+      - url: /product-service/v3/api-docs
+        name: PRODUCT API
+      - url: /delivery-service/v3/api-docs
+        name: DELIVERY API
