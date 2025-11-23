@@ -84,6 +84,12 @@ spring:
           filters:
             - 'RewritePath=/v1/users/(?<path>.*), /\${path}'
 
+rabbit:
+  user:
+    exchange: user.exchange
+    queue: user.queue
+    routing-key: user.role.mismatch
+
 springdoc:
   enable-native-support: true
   api-docs:
