@@ -77,6 +77,13 @@ spring:
           filters:
             - 'RewritePath=/v1/ai/logs/(?<path>.*), /\${path}'
 
+        - id: user-service-logout
+          uri: lb://user-service
+          predicates:
+            - Path=/v1/users/logout
+          filters:
+            - LogoutGatewayFilter
+
         - id: user-service
           uri: lb://user-service
           predicates:
