@@ -109,3 +109,7 @@ springdoc:
     doc-expansion: full
   paths-to-match:
     - /**
+
+openapi:
+  service:
+    url: http://localhost:3000
