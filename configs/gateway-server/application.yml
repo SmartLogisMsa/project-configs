@@ -29,7 +29,8 @@ spring:
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/v1/hubs/**, /v1/hub-routes/**
+            - Path=/v1/hubs/**
+            - Path=/v1/hub-routes/**
           filters:
             - 'RewritePath=/v1/hubs/(?<path>.*), /\${path}'
             - 'RewritePath=/v1/hub-routes/(?<path>.*), /\${path}'
@@ -58,7 +59,8 @@ spring:
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/v1/deliveries/**, /v1/deliveries-histories/**
+            - Path=/v1/deliveries/**
+            - Path=/v1/deliveries-histories/**
           filters:
             - 'RewritePath=/v1/deliveries/(?<path>.*), /\${path}'
             - 'RewritePath=/v1/deliveries-histories/(?<path>.*), /\${path}'
