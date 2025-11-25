@@ -1,4 +1,9 @@
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   cloud:
     gateway:
       discovery:
@@ -6,11 +11,26 @@ spring:
           enabled: true
           lower-case-service-id: true
 
+      globalcors:
+        cors-configurations:
+          '[/**]': # 모든 경로에 적용
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
       routes:
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/v1/hubs/**, /v1/hub-routes/**
+            - Path=/v1/hubs/**
+            - Path=/v1/hub-routes/**
           filters:
             - 'RewritePath=/v1/hubs/(?<path>.*), /\${path}'
             - 'RewritePath=/v1/hub-routes/(?<path>.*), /\${path}'
@@ -39,7 +59,8 @@ spring:
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/v1/deliveries/**, /v1/deliveries-histories/**
+            - Path=/v1/deliveries/**
+            - Path=/v1/deliveries-histories/**
           filters:
             - 'RewritePath=/v1/deliveries/(?<path>.*), /\${path}'
             - 'RewritePath=/v1/deliveries-histories/(?<path>.*), /\${path}'
@@ -64,3 +85,28 @@ spring:
             - Path=/v1/users/**
           filters:
             - 'RewritePath=/v1/users/(?<path>.*), /\${path}'
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /api-docs.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    doc-expansion: list
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /user-service/v3/api-docs
+        name: USER API
+      - url: /hub-service/v3/api-docs
+        name: HUB API
+      - url: /order-service/v3/api-docs
+        name: ORDER API
+      - url: /company-service/v3/api-docs
+        name: COMPANY API
+      - url: /product-service/v3/api-docs
+        name: PRODUCT API
+      - url: /delivery-service/v3/api-docs
+        name: DELIVERY API
