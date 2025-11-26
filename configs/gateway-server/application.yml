@@ -71,9 +71,9 @@ spring:
         - id: ai-service
           uri: lb://ai-service
           predicates:
-            - Path=/v1/ai/logs/**
+            - Path=/v1/ai/**
           filters:
-            - "RewritePath=/v1/ai/logs(?:/(?<path>.*))?, /\\${path}"
+            - "RewritePath=/v1/ai(?:/(?<path>.*))?, /\\${path}"
 
         - id: user-service
           uri: lb://user-service
