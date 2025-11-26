@@ -52,21 +52,21 @@ spring:
           predicates:
             - Path=/v1/orders/**
           filters:
-            - 'RewritePath=/v1/orders(?:/(?<path>.*))?, /${path}'
+            - "RewritePath=/v1/orders(?:/(?<path>.*))?, /\\${path}"
 
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
             - Path=/v1/deliveries/**
           filters:
-            - 'RewritePath=/v1/deliveries(?:/(?<path>.*))?, /${path}'
+            - "RewritePath=/v1/deliveries(?:/(?<path>.*))?, /\\${path}"
 
         - id: notification-service
           uri: lb://notification-service
           predicates:
-            - Path=/v1/notification/**
+            - Path=/v1/notifications/**
           filters:
-            - "RewritePath=/v1/notification(?:/(?<path>.*))?, /\\${path}"
+            - "RewritePath=/v1/notifications(?:/(?<path>.*))?, /\\${path}"
 
         - id: ai-service
           uri: lb://ai-service
@@ -106,3 +106,7 @@ springdoc:
         name: PRODUCT API
       - url: /delivery-service/v3/api-docs
         name: DELIVERY API
+      - url: /ai-service/v3/api-docs
+        name: AI API
+      - url: /notification-service/v3/api-docs
+        name: NOTIFICATION API
