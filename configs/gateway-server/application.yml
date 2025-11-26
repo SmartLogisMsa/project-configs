@@ -52,14 +52,14 @@ spring:
           predicates:
             - Path=/v1/orders/**
           filters:
-            - 'RewritePath=/v1/orders(?:/(?<path>.*))?, /${path}'
+            - "RewritePath=/v1/orders(?:/(?<path>.*))?, /\\${path}"
 
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
             - Path=/v1/deliveries/**
           filters:
-            - 'RewritePath=/v1/deliveries(?:/(?<path>.*))?, /${path}'
+            - "RewritePath=/v1/deliveries(?:/(?<path>.*))?, /\\${path}"
 
         - id: notification-service
           uri: lb://notification-service
