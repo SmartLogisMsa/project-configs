@@ -73,7 +73,7 @@ spring:
           predicates:
             - Path=/v1/ai/logs/**
           filters:
-            - "RewritePath=/v1/logs(?:/(?<path>.*))?, /\\${path}"
+            - "RewritePath=/v1/ai/logs(?:/(?<path>.*))?, /\\${path}"
 
         - id: user-service
           uri: lb://user-service
